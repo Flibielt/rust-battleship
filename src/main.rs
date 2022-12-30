@@ -39,19 +39,51 @@ impl Player {
         let mut local_x: usize = x.into();
         let mut local_y: usize = y.into();
 
-        for i in 0..ship_length {
+        for _i in 0..ship_length {
             if !matches!(self.board[local_x][local_y], BoardPart::EMPTY) {
                 return false;
             }
 
             if matches!(orientation, ShipOrientation::HORIZONTAL) {
-                local_y = local_y + 1;
-            } else {
                 local_x = local_x + 1;
+            } else {
+                local_y = local_y + 1;
             }
         }
 
         return true;
+    }
+
+    pub fn register_ship(&mut self, x: u8, y: u8, ship_length: u8, orientation: &ShipOrientation) {
+        let mut local_x: usize = x.into();
+        let mut local_y: usize = y.into();
+        for _i in 0..ship_length {
+            self.board[local_x][local_y] = BoardPart::SHIP;
+            
+            if matches!(orientation, ShipOrientation::HORIZONTAL) {
+                local_x = local_x + 1;
+            } else {
+                local_y = local_y + 1;
+            }
+        }
+    }
+
+    pub fn print_board(&self) {
+        println!("Name: {}", self.name);
+
+        print!("  ");
+        for x in 0..BOARD_SIZE {
+            print!("{} ", x);
+        }
+        println!("");
+
+        for y in 0..BOARD_SIZE {
+            print!("{} ", y);
+            for x in 0..BOARD_SIZE {
+                print!("{} ", self.board[x][y]);
+            }
+            println!("");
+        }
     }
 }
 
@@ -172,9 +204,15 @@ fn main() {
                 println!("Ships cannot cross each other");
                 x = -1;
                 y = -1;
+                continue;
             }
+
+            player.register_ship(x as u8, y as u8, SHIP_TYPES[i], &orientation);
+            player.print_board();
         }
     }
+
+    player.print_board();
 
 }
 
