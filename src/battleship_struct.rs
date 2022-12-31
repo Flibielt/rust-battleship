@@ -51,22 +51,7 @@ impl Player {
 
     pub fn print_board(&self) {
         println!("Name: {}", self.name);
-
-        print!("  ");
-        for x in 0..BOARD_SIZE {
-            print!("{} ", x);
-        }
-        print!("|X|");
-        println!("");
-
-        for y in 0..BOARD_SIZE {
-            print!("{} ", y);
-            for x in 0..BOARD_SIZE {
-                print!("{} ", self.board[x][y]);
-            }
-            println!("");
-        }
-        println!("|Y|")
+        crate::battleship_util::print_board(&self.board);
     }
 }
 
@@ -91,10 +76,10 @@ impl Ship {
             return false;
         }
 
-        if self.start_coordinate[1] >= self.end_coordinate[1] {
-            return self.start_coordinate[1] >= coordinate[1] && self.end_coordinate[1] <= coordinate[1];
+        return if self.start_coordinate[1] >= self.end_coordinate[1] {
+            self.start_coordinate[1] >= coordinate[1] && self.end_coordinate[1] <= coordinate[1]
         } else {
-            return self.end_coordinate[1] >= coordinate[1] && self.start_coordinate[1] <= coordinate[1];
+            self.end_coordinate[1] >= coordinate[1] && self.start_coordinate[1] <= coordinate[1]
         }
     }
 

@@ -25,8 +25,18 @@ fn main() {
     println!("Your name: {}", name);
 
     let mut player: Player = Player::new(name);
+    get_ships_from_user(&mut player);
+
+    player.print_board();
+
+    let opponent_board = battleship_util::create_opponent_board();
+    battleship_util::print_board(&opponent_board);
+
+}
+
+fn get_ships_from_user(player: &mut Player) {
     for i in 0..SHIP_TYPES.len() {
-        let mut input_line = String::new();
+        let mut input_line: String;
         let mut x: i8 = -1; 
         let mut y: i8 = -1; 
 
@@ -98,7 +108,4 @@ fn main() {
             player.print_board();
         }
     }
-
-    player.print_board();
-
 }

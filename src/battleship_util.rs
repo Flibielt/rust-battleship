@@ -16,3 +16,25 @@ pub fn is_ship_overlays_board(x: u8, y: u8, length: u8, orientation: &ShipOrient
     }
     return y + length > BOARD_SIZE as u8;
 }
+
+pub fn create_opponent_board() -> [[BoardPart; BOARD_SIZE]; BOARD_SIZE] {
+    return [[BoardPart::UNKNOWN;BOARD_SIZE];BOARD_SIZE];
+}
+
+pub fn print_board(board: &[[BoardPart; BOARD_SIZE]; BOARD_SIZE]) {
+    print!("  ");
+    for x in 0..BOARD_SIZE {
+        print!("{} ", x);
+    }
+    print!("|X|");
+    println!("");
+
+    for y in 0..BOARD_SIZE {
+        print!("{} ", y);
+        for x in 0..BOARD_SIZE {
+            print!("{} ", board[x][y]);
+        }
+        println!("");
+    }
+    println!("|Y|");
+}
